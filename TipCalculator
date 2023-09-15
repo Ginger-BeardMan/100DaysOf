@@ -1,0 +1,18 @@
+#If the bill was $150.00, split between 5 people, with 12% tip. 
+
+#Each person should pay (150.00 / 5) * 1.12 = 33.6
+#Format the result to 2 decimal places = 33.60
+
+#Tip: There are 2 ways to round a number. You might have to do some Googling to solve this.💪
+
+#Write your code below this line 👇
+
+bill_pre_tip = input('What was the total bill? ')
+total_guests = input('How many guests dined tonight? ')
+tip_percentage = input('How much would you like to tip? 10, 12, or 15 ')
+
+total_bill = (float(bill_pre_tip) * (float(tip_percentage) * .01)) + float(bill_pre_tip)
+
+cost_per_person = round((float(total_bill))/float(total_guests), 2)
+
+print(f'Each person should pay: {cost_per_person}')
