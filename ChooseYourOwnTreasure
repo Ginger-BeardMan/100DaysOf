@@ -27,14 +27,14 @@ print("Your mission is to find the treasure.")
 
 #Write your code below this line 👇
 
-first_choice = input('Your come to a fork in the forest, Where do you want to go? Type "Left" or "Right" ')
+first_choice = input('Your come to a fork in the forest, Where do you want to go? Type "Left" or "Right" ').lower()
 if first_choice == 'Left':
     print('You walk down a long corridor to a small clearing.')
-    second_choice = input('There is a wide lake for you to cross at the edge of the clearing. Do you swim across or wait for a boat? Type "Wait" or "Swim" ')
+    second_choice = input('There is a wide lake for you to cross at the edge of the clearing. Do you swim across or wait for a boat? Type "Wait" or "Swim" ').lower()
     
     if second_choice == 'Wait':
         print('A boatman comes and takes you across the lake for a small fee. After paying the boatman, you find yourself in front of three different colored doors.')
-        final_choice = input('You stand in front of a red door, a blue door, and a yellow door. Which do you choose to open? Type "Red", "Blue", or "Yellow". ')
+        final_choice = input('You stand in front of a red door, a blue door, and a yellow door. Which do you choose to open? Type "Red", "Blue", or "Yellow". ').lower()
         
         if final_choice == 'Yellow':
             print('You open the yellow door to reveal an open room with a large treasure chest. Congratulations, you have found the treasure!')
