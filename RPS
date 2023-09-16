@@ -34,16 +34,19 @@ player_choice = input('rock, paper, or scissors? ')
 if player_choice == 'rock':
     print('You chose:')
     print(rock)
+    player_choice = rock
 elif player_choice == 'paper':
     print('You chose:')
     print(paper)
+    player_choice = paper
 else:
     print('You chose:')
     print(scissors)
+    player_choice = scissors
 
 rand_comp_choice = random.randint(0,2)
 
-comp_choice = choices[comp_choice]
+comp_choice = choices[rand_comp_choice]
 
 print('Computer chose: ')
 print(comp_choice)
@@ -52,21 +55,13 @@ if comp_choice == player_choice:
     print('No one wins, try again')
 elif comp_choice == rock and player_choice == scissors:
     print('Rock smashes scissors, computer wins.')
-elif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+elif comp_choice == scissors and player_choice == paper:
+    print('Scissors cuts paper, computer wins.')
+elif comp_choice == paper and player_choice == rock:
+    print('Paper covers rock, computer wins.')
+elif player_choice == rock and comp_choice == scissors:
+    print('Rock smashes scissors, you win!')
+elif player_choice == scissors and comp_choice == paper:
+    print('Scissors cuts paper, you win!')
+elif player_choice == paper and comp_choice == rock:
+    print('Paper covers rock, you win!')
