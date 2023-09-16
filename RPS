@@ -1,0 +1,72 @@
+import random
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+
+#Write your code below this line 👇
+choices = [rock, paper, scissors]
+
+player_choice = input('rock, paper, or scissors? ')
+
+if player_choice == 'rock':
+    print('You chose:')
+    print(rock)
+elif player_choice == 'paper':
+    print('You chose:')
+    print(paper)
+else:
+    print('You chose:')
+    print(scissors)
+
+rand_comp_choice = random.randint(0,2)
+
+comp_choice = choices[comp_choice]
+
+print('Computer chose: ')
+print(comp_choice)
+
+if comp_choice == player_choice:
+    print('No one wins, try again')
+elif comp_choice == rock and player_choice == scissors:
+    print('Rock smashes scissors, computer wins.')
+elif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
