@@ -1,4 +1,5 @@
 # Calculator
+from art import logo
 
 # Add function
 def add(n1, n2):
@@ -22,28 +23,47 @@ operations = {
     "*": multiply,
     "/": divide
 }
-continue_calc = True
 
-while continue_calc:
-    
-    num1 = int(input("What's the first number?: "))
-    
+def calculator():
+    print(logo)
+
+    #initial calculation
+    num1 = float(input("What's the first number?: "))
+        
     for operator in operations:
         print(operator)
     operation_symbol = input("Pick an operation from the line above: ")
-    
-    num2 = int(input("What's the second number?: "))
-    
+        
+    num2 = float(input("What's the second number?: "))
+        
     calculation_func = operations[operation_symbol]
     
-    start_answer = calculation_func(num1, num2)
+    final_answer = round(calculation_func(num1, num2), 2)
     
-    print(f"{num1} {operation_symbol} {num2} = {start_answer}")
+    print(f"{num1} {operation_symbol} {num2} = {final_answer}")
     
-    answer = start_answer
+    continue_calc = True
     
-    next_calc = input("Type 'y' to continue calculating with {answer}, or type 'n' to exit.: ")
+    while continue_calc:
+        #new calculation
+        next_calc = input(f"Type 'y' to continue calculating with {final_answer}, or type 'n' to start a new calculation.: ")
+        
+        if next_calc == 'n':
+            #change condition to False, end loop, and restart calculator
+            continue_calc = False
+            calculator()
+        
+        elif next_calc == 'y':
+            start_answer = final_answer
+            #user chooses new operation
+            operation_symbol = input("Pick an operation from the line above: ")
+            #user inputs new number for calculation
+            num2 = float(input("What's the next number?: "))
+            #determine correct function based on operator and reassign the calculation_func
+            calculation_func = operations[operation_symbol]
+            #run the appropriate function for calculation
+            final_answer = round(calculation_func(start_answer, num2), 2)
+            #print calculation and answer to console
+            print(f"{start_answer} {operation_symbol} {num2} = {final_answer}")
 
-    if next_calc == 'n':
-        continue_calc = False
-    elif next_calc == 'y':
+calculator()
