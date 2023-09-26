@@ -1,0 +1,80 @@
+############### Our Blackjack House Rules #####################
+## The deck is unlimited in size. 
+## There are no jokers. 
+## The Jack/Queen/King all count as 10.
+## The the Ace can count as 11 or 1.
+## The cards in the list have equal probability of being drawn.
+## Cards are not removed from the deck as they are drawn.
+## The computer is the dealer.
+
+import random
+from art import logo
+
+print(logo)
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+
+def game_time():
+    start_game = input("Do you want to play a game of Blackjack? Type 'y' or 'n': ")
+
+    if start_game == 'y':
+    
+        user_cards = []
+        computer_cards = []
+        user_value = 0
+        computer_value = 0
+        for i in range(0,2):
+            card_index = random.randint(0,12)
+            user_cards.append(cards[card_index])
+            user_value += int(cards[card_index])
+        for i in range(0,2):
+            card_index = random.randint(0,12)
+            computer_cards.append(cards[card_index])
+            computer_value += int(cards[card_index])
+        print(f"Your cards: {user_cards}, current score: {user_value}")
+        print(f"Computer's first card: {computer_cards[0]}")
+    
+        blackjack = True
+    
+        while blackjack:
+            
+            #loop over this until game is over
+            continue_game = input("type 'y' to get another card, type 'n' to pass: ")
+            
+            if computer_value <= 16:
+                computer_cards.append(cards[card_index])
+                computer_value += int(cards[card_index])
+                
+            if continue_game == 'y':
+                    
+                card_index = random.randint(0,12)
+                    
+                if cards[card_index] == 11 and user_value >= 11:
+                    user_cards.append(1)
+                    user_value += 1
+                else:
+                    user_cards.append(cards[card_index])
+                    user_value += int(cards[card_index])
+                        
+                if user_value > 21:
+                    print(f"Your cards: {user_cards}, current score: {user_value}")
+                    print("You went over, you lose.")
+                    game_time()
+                    blackjack = False
+                else:
+                    print(f"Your cards: {user_cards}, current score: {user_value}")
+                    print(f"Computer's first card: {computer_cards[0]}")
+                    
+            elif continue_game == 'n':
+                if user_value <= 21:
+                    if user_value > computer_value or computer_value > 21:
+                        print(f'User Score: {user_value}, Computer Score: {computer_value}. You win!')
+                        game_time()
+                    elif user_value == computer_value:
+                        print(f'User Score: {user_value}, Computer Score: {computer_value}. A draw!')
+                        game_time()
+                    elif computer_value > user_value:
+                        print(f'User Score: {user_value}, Computer Score: {computer_value}. Computer wins!')
+                        game_time()
+                blackjack = False
+
+game_time()
