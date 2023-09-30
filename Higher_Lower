@@ -1,57 +1,77 @@
+import os
 from art import logo
 from art import vs
 import random
 from game_data import data
 
-# def higher_lower_game():
+# While replit has a built in clear function, it only works in replit so a (almost) universal clear function is needed
+clear = lambda: os.system("cls || clear")
 
-game_time = True
-user_points = 0
+def higher_lower_game():
 
-# Initial value assignment:
-
-# Get two items from data
-a_index = random.randint(0, len(data)-1)
-a_individual = data[a_index]
-
-b_index = random.randint(0, len(data)-1)
-b_individual = data[b_index]
-
-while game_time:
-
-    # get the 'followers' for each and compare amounts
-    if a_individual["follower_count"] > b_individual["follower_count"]:
-        higher_followers = 'a'
-    elif b_individual["follower_count"] > a_individual["follower_count"]:
-        higher_followers = 'b'
-
-    print(logo)
-
-    # A individual:
-    print(f'Compare A: {a_individual["name"]}, a {a_individual["description"]}, from {a_individual["country"]}')
+    game_time = True
+    user_points = 0
     
-    print(vs)
+    # Initial value assignment:
     
-    # B individual:
-    print(f'Against B: {b_individual["name"]}, a {b_individual["description"]}, from {b_individual["country"]}')
+    # Get two items from data
+    a_index = random.randint(0, len(data)-1)
+    a_individual = data[a_index]
     
-    user_answer = input("Who has more followers? Type 'A' or 'B': ").lower()
+    b_index = random.randint(0, len(data)-1)
+    b_individual = data[b_index]
     
-    if user_answer == higher_followers:
-        user_points += 1
-        # print this to screen
-        print(f"You're right! Current score: {user_points}")
-
-        # reassign values so that A was the previous match's correct owner
-        a_individual = b_individual
-        
-        # get a new B value
+    if b_index == a_index:
         b_index = random.randint(0, len(data)-1)
         b_individual = data[b_index]
-
-        clear()
+    
+    while game_time:
+    
+        # get the 'followers' for each and compare amounts
+        if a_individual["follower_count"] > b_individual["follower_count"]:
+            higher_followers = 'a'
+        elif b_individual["follower_count"] > a_individual["follower_count"]:
+            higher_followers = 'b'
+            
+        print(logo)
         
-    elif user_answer != higher_followers:
-        # game over; print score
-        print(f'Game Over. Final score: {user_points}')
-        game_time = False
+        if user_points >= 1:
+            # print user score to the screen
+            print(f"You're right! Current score: {user_points}")
+        
+        # A individual:
+        print(f'Compare A: {a_individual["name"]}, a {a_individual["description"]}, from {a_individual["country"]}')
+        
+        print(vs)
+        
+        # B individual:
+        print(f'Against B: {b_individual["name"]}, a {b_individual["description"]}, from {b_individual["country"]}')
+        
+        user_answer = input("Who has more followers? Type 'A' or 'B': ").lower()
+        
+        if user_answer == higher_followers:
+            user_points += 1
+    
+            # reassign values so that A was the previous match's correct owner
+            a_individual = b_individual
+            
+            # get a new B value
+            b_index = random.randint(0, len(data)-1)
+            b_individual = data[b_index]
+            
+            if b_individual == a_individual:
+                b_index = random.randint(0, len(data)-1)
+                b_individual = data[b_index]
+            
+            clear()
+            
+        elif user_answer != higher_followers:
+            # game over; print score
+            print(f'Game Over. Final score: {user_points}')
+            game_time = False
+            new_game = input("Type 'y' to start a new game or 'n' to quit: ")
+            if new_game == 'y':
+                clear()
+                higher_lower_game()
+
+higher_lower_game()
