@@ -48,10 +48,13 @@ coins = {
     "quarter": .25,
 }
 
+print('Welcome to the coffee machine!')
+profit = 0
+
 
 def coffee_maker():
 
-    print('Welcome to the coffee machine!')
+    global profit
 
     customer_payment = round(0, 2)
 
@@ -64,131 +67,128 @@ def coffee_maker():
 
         cost = MENU['espresso']['cost']
 
-        print(f'That drink costs {cost}. Please insert your coins when ready.')
+        # is there enough contents in the machine
+        if resources['coffee'] >= esp_coff and resources['water'] >= esp_wat:
 
-        # customer_payment
-        while customer_payment < cost:
-            penny = input('How many pennies will you be using?: ')
-            customer_payment += (int(penny)*coins['penny'])
-            nickel = input('How many nickels will you be using?: ')
-            customer_payment += (int(nickel)*coins['nickel'])
-            dime = input('How many dimes will you be using?: ')
-            customer_payment += (int(dime)*coins['dime'])
-            quarter = input('How many quarters will you be using?: ')
-            customer_payment += (int(quarter)*coins['quarter'])
+            # reduce resources for the specific drink
+            resources['coffee'] -= esp_coff
+            resources['water'] -= esp_wat
 
-            # check that enough money has been inserted
-            if customer_payment >= cost:
-                change = round(customer_payment-cost, 2)
-                print(f'Please take your change: {change}')
+            print(f'That drink costs {cost}. Please insert your coins when ready.')
 
-                # is there enough contents in the machine
-                if resources['coffee'] > esp_coff and resources['water'] > esp_wat:
+            # customer_payment
+            if customer_payment < cost:
+                penny = input('How many pennies will you be using?: ')
+                customer_payment += (int(penny)*coins['penny'])
+                nickel = input('How many nickels will you be using?: ')
+                customer_payment += (int(nickel)*coins['nickel'])
+                dime = input('How many dimes will you be using?: ')
+                customer_payment += (int(dime)*coins['dime'])
+                quarter = input('How many quarters will you be using?: ')
+                customer_payment += (int(quarter)*coins['quarter'])
 
-                    # reduce resources for the specific drink
-                    resources['coffee'] -= esp_coff
-                    resources['water'] -= esp_wat
+                # check that enough money has been inserted
+                if customer_payment >= cost:
+                    profit += cost
+                    change = round(customer_payment-cost, 2)
+                    print(f'Please take your change: {change}')
                     print('Here is your espresso! Enjoy!')
                     coffee_maker()
 
+                # if the customer does not insert enough money, return their money and cancel transaction
                 else:
-                    print('Sorry, the machine is out of the necessary ingredients for this drink.')
+                    print('Not enough money was inserted.')
                     print(f'Please take your change: {customer_payment}')
                     coffee_maker()
 
-            # if the customer does not insert enough money, return their money and cancel transaction
-            else:
-                print('Not enough money was inserted.')
-                print(f'Please take your change: {customer_payment}')
-                coffee_maker()
+        else:
+            print('Sorry, the machine is out of the necessary ingredients for this drink.')
+            coffee_maker()
 
     # indicate the needed money and collect funds
     elif customer_order == 'latte':
 
         cost = MENU['latte']['cost']
 
-        print(f'That drink costs {cost}. Please insert your coins when ready.')
+        # is there enough contents in the machine
+        if resources['coffee'] >= lat_coff and resources['water'] >= lat_wat and resources['milk'] >= lat_milk:
 
-        # customer_payment
-        while customer_payment < cost:
-            penny = input('How many pennies will you be using?: ')
-            customer_payment += (int(penny) * coins['penny'])
-            nickel = input('How many nickels will you be using?: ')
-            customer_payment += (int(nickel) * coins['nickel'])
-            dime = input('How many dimes will you be using?: ')
-            customer_payment += (int(dime) * coins['dime'])
-            quarter = input('How many quarters will you be using?: ')
-            customer_payment += (int(quarter) * coins['quarter'])
+            # reduce resources for the specific drink
+            resources['coffee'] -= lat_coff
+            resources['water'] -= lat_wat
+            resources['milk'] -= lat_milk
 
-            # check that enough money has been inserted
-            if customer_payment >= cost:
-                change = round(customer_payment - cost, 2)
-                print(f'Please take your change: {change}')
+            print(f'That drink costs {cost}. Please insert your coins when ready.')
 
-                # is there enough contents in the machine
-                if resources['coffee'] > lat_coff and resources['water'] > lat_wat and resources['milk'] > lat_milk:
+            # customer_payment
+            if customer_payment < cost:
+                penny = input('How many pennies will you be using?: ')
+                customer_payment += (int(penny) * coins['penny'])
+                nickel = input('How many nickels will you be using?: ')
+                customer_payment += (int(nickel) * coins['nickel'])
+                dime = input('How many dimes will you be using?: ')
+                customer_payment += (int(dime) * coins['dime'])
+                quarter = input('How many quarters will you be using?: ')
+                customer_payment += (int(quarter) * coins['quarter'])
 
-                    # reduce resources for the specific drink
-                    resources['coffee'] -= lat_coff
-                    resources['water'] -= lat_wat
-                    resources['milk'] -= lat_milk
+                # check that enough money has been inserted
+                if customer_payment >= cost:
+                    profit += cost
+                    change = round(customer_payment - cost, 2)
+                    print(f'Please take your change: {change}')
                     print('Here is your latte! Enjoy!')
                     coffee_maker()
 
+                # if the customer does not insert enough money, return their money and cancel transaction
                 else:
-                    print('Sorry, the machine is out of the necessary ingredients for this drink.')
+                    print('Not enough money was inserted.')
                     print(f'Please take your change: {customer_payment}')
                     coffee_maker()
+        else:
+            print('Sorry, the machine is out of the necessary ingredients for this drink.')
+            coffee_maker()
 
-            # if the customer does not insert enough money, return their money and cancel transaction
-            else:
-                print('Not enough money was inserted.')
-                print(f'Please take your change: {customer_payment}')
-                coffee_maker()
-
-    # indicate the needed money and collect funds
     elif customer_order == 'cappuccino':
 
         cost = MENU['cappuccino']['cost']
 
-        print(f'That drink costs {cost}. Please insert your coins when ready.')
+        # is there enough contents in the machine
+        if resources['coffee'] >= cap_coff and resources['water'] >= cap_wat and resources['milk'] >= cap_milk:
 
-        # customer_payment
-        while customer_payment < cost:
-            penny = input('How many pennies will you be using?: ')
-            customer_payment += (int(penny) * coins['penny'])
-            nickel = input('How many nickels will you be using?: ')
-            customer_payment += (int(nickel) * coins['nickel'])
-            dime = input('How many dimes will you be using?: ')
-            customer_payment += (int(dime) * coins['dime'])
-            quarter = input('How many quarters will you be using?: ')
-            customer_payment += (int(quarter) * coins['quarter'])
+            # reduce resources for the specific drink
+            resources['coffee'] -= cap_coff
+            resources['water'] -= cap_wat
+            resources['milk'] -= cap_milk
 
-            # check that enough money has been inserted
-            if customer_payment >= cost:
-                change = round(customer_payment - cost, 2)
-                print(f'Please take your change: {change}')
+            print(f'That drink costs {cost}. Please insert your coins when ready.')
 
-                # is there enough contents in the machine
-                if resources['coffee'] > cap_coff and resources['water'] > cap_wat and resources['milk'] > cap_milk:
+            # customer_payment
+            if customer_payment < cost:
+                penny = input('How many pennies will you be using?: ')
+                customer_payment += (int(penny) * coins['penny'])
+                nickel = input('How many nickels will you be using?: ')
+                customer_payment += (int(nickel) * coins['nickel'])
+                dime = input('How many dimes will you be using?: ')
+                customer_payment += (int(dime) * coins['dime'])
+                quarter = input('How many quarters will you be using?: ')
+                customer_payment += (int(quarter) * coins['quarter'])
 
-                    # reduce resources for the specific drink
-                    resources['coffee'] -= cap_coff
-                    resources['water'] -= cap_wat
-                    resources['milk'] -= cap_milk
+                # check that enough money has been inserted
+                if customer_payment >= cost:
+                    profit += cost
+                    change = round(customer_payment - cost, 2)
+                    print(f'Please take your change: {change}')
                     print('Here is your cappuccino! Enjoy!')
                     coffee_maker()
 
+                # if the customer does not insert enough money, return their money and cancel transaction
                 else:
-                    print('Sorry, the machine is out of the necessary ingredients for this drink.')
+                    print('Not enough money was inserted.')
                     print(f'Please take your change: {customer_payment}')
                     coffee_maker()
-
-            # if the customer does not insert enough money, return their money and cancel transaction
-            else:
-                print('Not enough money was inserted.')
-                print(f'Please take your change: {customer_payment}')
-                coffee_maker()
+        else:
+            print('Sorry, the machine is out of the necessary ingredients for this drink.')
+            coffee_maker()
 
     elif customer_order == 'report':
         # indicate the contents of the machine
@@ -199,7 +199,7 @@ def coffee_maker():
         # coffee
         print(f"Coffee available: {resources['coffee']}g")
         # payment
-        print(f'Available funds: ${customer_payment}')
+        print(f'Profit funds: ${profit}')
         coffee_maker()
 
     elif customer_order == 'cancel order':
