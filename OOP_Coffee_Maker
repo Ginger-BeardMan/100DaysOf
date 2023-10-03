@@ -1,0 +1,39 @@
+from menu import Menu, MenuItem
+from coffee_maker import CoffeeMaker
+from money_machine import MoneyMachine
+
+print('Welcome to the coffee machine!')
+
+cust_order = MenuItem('name', 'water', 'milk', 'coffee', 'cost')
+
+order_start = Menu()
+
+available_drinks = CoffeeMaker()
+
+payment = MoneyMachine()
+
+coffee_break = True
+
+while coffee_break:
+
+    print('What would you like to order? "espresso", "latte", or "cappuccino"?')
+    cust_order.name = input('You can cancel your order by indicating "cancel order": ')
+
+    if cust_order.name == 'espresso' or cust_order.name == 'cappuccino' or cust_order.name == 'latte':
+
+        if available_drinks.is_resource_sufficient((order_start.find_drink(cust_order.name))):
+
+            if payment.make_payment((order_start.find_drink(cust_order.name)).cost):
+
+                available_drinks.make_coffee((order_start.find_drink(cust_order.name)))
+
+        else:
+            coffee_break = False
+
+    elif cust_order.name == 'report':
+
+        payment.report()
+        available_drinks.report()
+
+    else:
+        coffee_break = False
