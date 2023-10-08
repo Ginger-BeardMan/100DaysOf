@@ -1,0 +1,50 @@
+import turtle as t
+import random
+# import colorgram
+#
+# colors = colorgram.extract('image.jpg', 20)
+#
+# hirst_colors = []
+#
+# for i in range(20):
+#     color = colors[i]
+#     rgb = color.rgb
+#     new_color = (rgb.r, rgb.g, rgb.b)
+#     hirst_colors.append(new_color)
+#
+# print(hirst_colors)
+
+color_list = [(215, 148, 91), (214, 81, 63), (39, 22, 26), (48, 92, 140), (232, 220, 88), (143, 66, 89), (205, 71, 88),
+ (147, 70, 60), (192, 140, 157), (123, 168, 193), (30, 19, 17), (34, 35, 49), (122, 175, 130), (33, 132, 92),
+ (81, 166, 99), (39, 158, 194)]
+
+tim = t.Turtle()
+screen = t.Screen()
+screen.colormode(255)
+tim.speed('fastest')
+
+# requirements
+# 10 x 10 rows of spot
+# dot is size 20
+# space between dots is 50
+
+
+def dots():
+    tim.penup()
+    for i in range(1, 11):
+        tim.dot(20, random.choice(color_list))
+        tim.fd(50)
+    tim.setposition(-250, (tim.ycor() + 50))
+
+
+def paint_dots():
+    tim.penup()
+    tim.hideturtle()
+    tim.setposition(-250, -250)
+    for row in range(10):
+        dots()
+
+
+paint_dots()
+
+screen.exitonclick()
