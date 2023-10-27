@@ -9,7 +9,7 @@ km_conversion = 0
 
 
 def miles_to_km():
-    miles = int(miles_entry.get())
+    miles = float(miles_entry.get())
     miles_to_km.km_conversion = round(miles*1.6, 2)
     conversion_label.config(text=miles_to_km.km_conversion)
 
