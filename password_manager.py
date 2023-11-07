@@ -75,9 +75,6 @@ def find_password():
     try:
         with open('data.json', 'r') as data_file:
             data = json.load(data_file)
-        # display information to a window in the correct format
-        messagebox.showinfo(title=website_address, message=f"Email/Username: {data[website_address]['email']}"
-                                                           f"\nPassword: {data[website_address]['password']}")
 
     # if not, show error message
     except FileNotFoundError:
@@ -85,6 +82,11 @@ def find_password():
 
     except KeyError:
         messagebox.showinfo(title='Warning', message='No details for the website exists.')
+
+    else:
+        # display information to a window in the correct format
+        messagebox.showinfo(title=website_address, message=f"Email/Username: {data[website_address]['email']}"
+                                                           f"\nPassword: {data[website_address]['password']}")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
