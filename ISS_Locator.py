@@ -18,35 +18,17 @@ password = 'abcd1357)('
 
 my_second_email = 'bungus3535@gmail.com'
 
-# ISS location
-response = requests.get(url='http://api.open-notify.org/iss-now.json')
-response.raise_for_status()
-
-data = response.json()
-
-iss_longitude = float(data['iss_position']['longitude'])
-iss_latitude = float(data['iss_position']['latitude'])
-
-iss_position = (iss_latitude, iss_longitude)
-
-# Sunrise/Sunset based on location
-parameters = {
-    'lat': MY_LAT,
-    'long': MY_LONG,
-    'formatted': 0
-}
-
-response = requests.get(url='https://api.sunrise-sunset.org/json', params=parameters)
-response.raise_for_status()
-data = response.json()
-sunrise = int(data['results']['sunrise'].split('T')[1].split(":")[0])
-sunset = int(data['results']['sunset'].split('T')[1].split(":")[0])
-
-time_now = datetime.now()
-current_hour = time_now.hour
-
 
 def check_location():
+    # ISS location
+    response = requests.get(url='http://api.open-notify.org/iss-now.json')
+    response.raise_for_status()
+
+    data = response.json()
+
+    iss_longitude = float(data['iss_position']['longitude'])
+    iss_latitude = float(data['iss_position']['latitude'])
+
     if low_lat < iss_latitude < up_lat and low_long < iss_longitude < up_long:
         return True
     else:
@@ -54,6 +36,22 @@ def check_location():
 
 
 def check_light():
+    # Sunrise/Sunset based on location
+    parameters = {
+        'lat': MY_LAT,
+        'long': MY_LONG,
+        'formatted': 0
+    }
+
+    response = requests.get(url='https://api.sunrise-sunset.org/json', params=parameters)
+    response.raise_for_status()
+    data = response.json()
+    sunrise = int(data['results']['sunrise'].split('T')[1].split(":")[0])
+    sunset = int(data['results']['sunset'].split('T')[1].split(":")[0])
+
+    time_now = datetime.now()
+    current_hour = time_now.hour
+    
     if sunset < current_hour < sunrise:
         return True
     else:
