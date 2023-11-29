@@ -4,7 +4,7 @@ import smtplib
 # ------------------- Data/Starting Information ------------------------
 
 OWM_Endpoint = 'https://api.openweathermap.org/data/2.5/forecast'
-api_key = '93f383bb55bd8e5fe23a38938e1475f2'
+api_key = # ADD Api Key
 
 parameters = {
     'lat': 42.360081,
