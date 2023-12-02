@@ -1,9 +1,12 @@
 import requests
+from twilio.rest import Client
 
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
 STK_API_KEY = # ADD KEY
 NWS_API_KEY = # ADD KEY
+account_sid = ''
+auth_token = ''
 
 
 # ------------------------------------ API ------------------------------------
@@ -11,9 +14,8 @@ NWS_API_KEY = # ADD KEY
 
 stocks_url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={STOCK}&interval=5min&apikey={STK_API_KEY}'
 stocks_r = requests.get(stocks_url, headers={'Authorization': STK_API_KEY})
-stocks_data = stocks_r.json()
+stocks_data = stocks_r.json()['Time Series (Daily)']
 
-daily_prices = []
 
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME.
 
@@ -21,46 +23,38 @@ news_url = f'https://newsapi.org/v2/everything?q={COMPANY_NAME}&apiKey={NWS_API_
 news_r = requests.get(news_url, headers={'Authorization': NWS_API_KEY})
 news_data = news_r.json()
 
-print((daily_prices[0] - daily_prices[1]) * 100 / daily_prices[0])
-
-# Send a separate message with the percentage change and each article's title and description to your phone number.
-
-
 
 # ------------------------------ FUNCTION & CALL ------------------------------
 
 
 def compare_stocks():
-    for date in stocks_data['Time Series (Daily)']:
-        daily_prices.append(float(stocks_data['Time Series (Daily)'][date]['4. close']))
+    daily_prices = [value for (key, value) in stocks_data.items()]
 
-    if (daily_prices[0] - daily_prices[1]) * 100 / daily_prices[0] >= 5:
-        for article in range(3):
-            print(f"Headline: {news_data['articles'][article]['title']}")
-            print(f"Brief: {news_data['articles'][article]['description']}")
+    yesterday_price = float(daily_prices[0]['4. close'])
+
+    day_before_price = float(daily_prices[1]['4. close'])
+
+    percent_change = round((yesterday_price - day_before_price) * 100 / yesterday_price, 2)
+
+    article_one = f"Headline: {news_data['articles'][0]['title']}\n" \
+                  f"Brief: {news_data['articles'][0]['description']}\n"
+
+    article_two = f"Headline: {news_data['articles'][1]['title']}\n" \
+                  f"Brief: {news_data['articles'][1]['description']}\n"
+
+    article_three = f"Headline: {news_data['articles'][2]['title']}\n" \
+                    f"Brief: {news_data['articles'][2]['description']}\n"
+
+    if percent_change <= 5:
+
+        text_message = (f"{COMPANY_NAME}: {percent_change}%\n"
+                        f"{article_one}{article_two}{article_three}")
+
+# Send a separate message with the percentage change and each article's title and description to your phone number.
+        
+        client = Client(account_sid, auth_token)
+        message = client.messages.create(body=f"{text_message}", from='+18009995454', to='Your verified number')
+        print(message.status)
 
 
 compare_stocks()
-
-
-# STEP 3: Use https://www.twilio.com
-
-
-
-
-
-# Optional: Format the SMS message like this:
-"""
-TSLA: 🔺2%
-Headline: Were Hedge Funds Right About Piling Into Tesla Inc. (TSLA)?. 
-Brief: We at Insider Monkey have gone over 821 13F filings that hedge funds and prominent investors are required to file
-by the SEC The 13F filings show the funds' and investors' portfolio positions as of March 31st, near the height of the 
-coronavirus market crash.
-or
-"TSLA: 🔻5%
-Headline: Were Hedge Funds Right About Piling Into Tesla Inc. (TSLA)?. 
-Brief: We at Insider Monkey have gone over 821 13F filings that hedge funds and prominent investors are required to file
-by the SEC The 13F filings show the funds' and investors' portfolio positions as of March 31st, near the height of the 
-coronavirus market crash.
-"""
-
