@@ -1,11 +1,29 @@
 import requests
 from bs4 import BeautifulSoup
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
+import os
+import pprint
+import sys
 
-# date = input('Which year do want to travel to? Type the date in this format YYYY-MM-DD: \n')
-#
-# URL = f"https://www.billboard.com/charts/hot-100/{date}"
+# os.environ['SPOTIPY_CLIENT_ID']
+# os.environ['SPOTIPY_CLIENT_SECRET']
+# SPOTIPY_REDIRECT_URI = 'http://example.com'
 
-URL = f"https://www.billboard.com/charts/hot-100/1989-03-31"
+# if len(sys.argv) > 1:
+#     search_str = sys.argv[1]
+# else:
+#     search_str = 'Radiohead'
+# 
+# sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+# result = sp.search(search_str)
+# pprint.pprint(result)
+
+# --------------------------------------- Fetching Top 100 Billboard Info ----------------------------------------
+
+date = input('Which year do want to travel to? Type the date in this format YYYY-MM-DD: \n')
+
+URL = f"https://www.billboard.com/charts/hot-100/{date}"
 
 response = requests.get(URL)
 billboard_webpage = response.text
