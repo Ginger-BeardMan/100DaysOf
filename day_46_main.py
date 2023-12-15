@@ -50,7 +50,8 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.environ['SPOTIPY_CLI
 #     artist_info = sp.search(artist)
 #     pprint.pprint(artist_info['tracks']['items'][0]['artists'][0]['uri'].split(':')[2])
 
-print(sp.search('The Bangles - Eternal Flame'))
-# ['tracks']['items'][0]['album'][0]['uri'].split(':')[2]
-#
+song_info = sp.search('The Bangles - Eternal Flame')
+
+song_uri = song_info['tracks']['items'][0]['uri'].split(':')[2]
+
 # sp.playlist_add_items()
