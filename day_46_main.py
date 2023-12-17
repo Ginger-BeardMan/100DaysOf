@@ -29,12 +29,23 @@ print(artist_music)
 
 # -------------------------------------------- Fetching Artist Info ---------------------------------------------
 
+
 SPOTIPY_REDIRECT_URI = 'http://example.com'
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.environ['SPOTIPY_CLIENT_ID'],
-                                               client_secret=os.environ['SPOTIPY_CLIENT_SECRET'],
-                                               redirect_uri=SPOTIPY_REDIRECT_URI,
-                                               scope='user-library-read'))
+OAUTH_AUTHORIZE_URL='https://accounts.spotify.com/authorize'
+
+OAUTH_TOKEN_URL='https://accounts.spotify.com/api/token'
+
+sp = spotipy.oauth2.SpotifyOAuth(client_id=None, client_secret=None, redirect_uri=SPOTIPY_REDIRECT_URI, state=None,
+                                 scope=None,cache_path=None, username=None, proxies=None, show_dialog=False,
+                                 requests_session=True, requests_timeout=None)
+
+sp.get_cached_token()
+
+# sp = spotipy.oauth2.SpotifyOAuth(client_id=os.environ['SPOTIPY_CLIENT_ID'],
+#                                  client_secret=os.environ['SPOTIPY_CLIENT_SECRET'],
+#                                  redirect_uri=SPOTIPY_REDIRECT_URI,
+#                                  scope='user-library-read')
 
 # user_id = sp.current_user()['id']
 #
@@ -44,14 +55,8 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.environ['SPOTIPY_CLI
 #                         collaborative=False,
 #                         description=f"Top 100 Songs on {date}")
 #
-# track_ids = []
-
-# for artist in artists:
-#     artist_info = sp.search(artist)
-#     pprint.pprint(artist_info['tracks']['items'][0]['artists'][0]['uri'].split(':')[2])
-
-song_info = sp.search('The Bangles - Eternal Flame')
-
-song_uri = song_info['tracks']['items'][0]['uri'].split(':')[2]
-
-# sp.playlist_add_items()
+# # for artist_song in artist_music:
+# #     song_info = sp.search(artist_song)
+# #     song_uri = song_info['tracks']['items'][0]['uri'].split(':')[2]
+# #     sp.playlist_add_items()
+#
