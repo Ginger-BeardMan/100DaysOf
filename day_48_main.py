@@ -1,25 +1,20 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-# keep browser open after program finishes
 firefox_options = webdriver.FirefoxOptions()
-# chrome_options.add_experimental_option('detach', True)
 
 driver = webdriver.Firefox(options=firefox_options)
 
 driver.get('https://python.org')
 
-nums = [0, 1, 2, 3, 4]
+event_times = driver.find_elements(By.CSS_SELECTOR, value='.event-widget time')
+event_title = driver.find_elements(By.CSS_SELECTOR, value='.event-widget li a')
+events = {}
 
-keys = ['time', 'name', 'time', 'name', 'time', 'name', 'time', 'name', 'time', 'name']
+for n in range(4):
+    events[n] = {'time': event_times[n].text, 'name': event_title[n].text}
 
-full_list = driver.find_element(By.XPATH, value='//*[@id="content"]/div/section/div[3]/div[2]/div/ul')
-
-item_list = full_list.text.split('\n')
-
-upcoming_events = {num: {k: v for (k, v) in (keys, item_list)} for num in nums}
-
-print(upcoming_events)
+print(events)
 
 # rand_dict = {key: value for (key, value) in zip(keys, item_list)}
 #
