@@ -16,58 +16,64 @@ cookie_time = True
 # ------------------------------------------------------- Items -------------------------------------------------------
 click_cookie = driver.find_element(By.ID, value='cookie')
 
-cookie_clicks = driver.find_element(By.ID, value='money')
+cookie_clicks = driver.find_element(By.XPATH, value='//*[@id="money"]')
 cookie_money = int(cookie_clicks.text)
 
 # elder_pledge_element = driver.find_element(By.XPATH, value='//*[@id="buyElder Pledge"]/b')
 # elder_pledge = int(elder_pledge_element.text.split()[1])
 
 time_machine_element = driver.find_element(By.XPATH, value='//*[@id="buyTime machine"]/b')
-time_machine = int(time_machine_element.text.split()[3].replace(',', ''))
+time_machine_money = int(time_machine_element.text.split()[3].replace(',', ''))
+time_machine_button = driver.find_element(By.ID, value="buyTime machine")
 
 portal_element = driver.find_element(By.XPATH, value='//*[@id="buyPortal"]/b')
-portal = int(portal_element.text.split()[2].replace(',', ''))
+portal_money = int(portal_element.text.split()[2].replace(',', ''))
+portal_button = driver.find_element(By.ID, value='buyPortal')
 
 alchemy_lab_element = driver.find_element(By.XPATH, value='//*[@id="buyAlchemy lab"]/b')
-alchemy_lab = int(alchemy_lab_element.text.split()[3].replace(',', ''))
+alchemy_lab_money = int(alchemy_lab_element.text.split()[3].replace(',', ''))
+alchemy_lab_button = driver.find_element(By.ID, value='buyAlchemy lab')
 
 shipment_element = driver.find_element(By.XPATH, value='//*[@id="buyShipment"]/b')
-shipment = int(shipment_element.text.split()[2].replace(',', ''))
+shipment_money = int(shipment_element.text.split()[2].replace(',', ''))
+shipment_button = driver.find_element(By.ID, value='buyShipment')
 
 mine_element = driver.find_element(By.XPATH, value='//*[@id="buyMine"]/b')
-mine = int(mine_element.text.split()[2].replace(',', ''))
+mine_money = int(mine_element.text.split()[2].replace(',', ''))
+mine_button = driver.find_element(By.ID, value='buyMine')
 
 factory_element = driver.find_element(By.XPATH, value='//*[@id="buyFactory"]/b')
-factory = int(factory_element.text.split()[2].replace(',', ''))
+factory_money = int(factory_element.text.split()[2].replace(',', ''))
+factory_button = driver.find_element(By.ID, value='buyFactory')
 
 grandma_element = driver.find_element(By.XPATH, value='//*[@id="buyGrandma"]/b')
-grandma = int(grandma_element.text.split()[2].replace(',', ''))
+grandma_money = int(grandma_element.text.split()[2].replace(',', ''))
+grandma_button = driver.find_element(By.ID, value='buyGrandma')
 
 cursor_element = driver.find_element(By.XPATH, value='//*[@id="buyCursor"]/b')
-cursor = int(cursor_element.text.split()[2].replace(',', ''))
+cursor_money = int(cursor_element.text.split()[2].replace(',', ''))
+cursor_button = driver.find_element(By.ID, value='buyCursor')
 
 
-def check_costs():
-    if cookie_money >= time_machine:
-        actionChains.double_click(time_machine_element)
-    elif cookie_money >= portal:
-        actionChains.double_click(portal_element)
-    elif cookie_money >= alchemy_lab:
-        actionChains.double_click(alchemy_lab_element)
-    elif cookie_money >= shipment:
-        actionChains.double_click(shipment_element)
-    elif cookie_money >= mine:
-        actionChains.double_click(mine_element)
-    elif cookie_money >= factory:
-        actionChains.double_click(factory_element)
-    elif cookie_money >= grandma:
-        actionChains.double_click(grandma_element)
-    elif cookie_money >= cursor:
-        actionChains.double_click(cursor_element)
-
+# def check_costs():
 
 while cookie_time:
     click_cookie.click()
-    check_costs()
-    if cookie_money >= 1000000:
+    if int(cookie_clicks.text) >= time_machine_money:
+        time_machine_button.click()
+    elif int(cookie_clicks.text) >= portal_money:
+        portal_button.click()
+    elif int(cookie_clicks.text) >= alchemy_lab_money:
+        alchemy_lab_button.click()
+    elif int(cookie_clicks.text) >= shipment_money:
+        shipment_button.click()
+    elif int(cookie_clicks.text) >= mine_money:
+        mine_button.click()
+    elif int(cookie_clicks.text) >= factory_money:
+        factory_button.click()
+    elif int(cookie_clicks.text) >= grandma_money:
+        grandma_button.click()
+    elif int(cookie_clicks.text) >= cursor_money:
+        cursor_button.click()
+    elif int(cookie_clicks.text) >= 100000:
         cookie_time = False
