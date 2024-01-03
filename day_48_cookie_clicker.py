@@ -11,11 +11,11 @@ driver.get(URL)
 
 actionChains = ActionChains(driver)
 
-
 def cookie_clicker():
     cookie_time = True
     start_time = time.time()
     while cookie_time:
+
         click_cookie = driver.find_element(By.ID, value='cookie')
 
         cookie_clicks = driver.find_element(By.XPATH, value='//*[@id="money"]')
@@ -53,13 +53,22 @@ def cookie_clicker():
         cursor_money = int(cursor_element.text.split()[2].replace(',', ''))
         cursor_button = driver.find_element(By.ID, value='buyCursor')
 
+        cookies_per_second_element = driver.find_element(By.XPATH, value='//*[@id="cps"]')
+        cookies_per_second = cookies_per_second_element.text
+
         click_cookie.click()
 
         stop_time = time.time()
 
-        if stop_time - start_time >= 600:
+        elapsed_time = stop_time - start_time
+
+        print(stop_time - start_time)
+
+        if elapsed_time >= 300.0:
+            print(f"cookies/second: {cookies_per_second}")
+            driver.quit()
             cookie_time = False
-        elif stop_time - start_time >= 5:
+        elif elapsed_time >= 5.0:
             if int(cookie_clicks.text) >= time_machine_money:
                 time_machine_button.click()
             elif int(cookie_clicks.text) >= portal_money:
