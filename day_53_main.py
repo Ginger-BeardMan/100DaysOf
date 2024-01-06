@@ -12,15 +12,24 @@ response = requests.get(URL)
 zillow_clone_webpage = response.text
 soup = BeautifulSoup(zillow_clone_webpage, 'html.parser')
 
-links = soup.find_all('a')
+links = []
+addresses = []
+prices = []
 
-for link in links:
-    print(link.get('href'))
+page_links = soup.find_all('a', {'class': 'property-card-link'})
 
-addresses = soup.find_all('address')
+for link in page_links:
+    links.append(link.get('href'))
 
-for address in addresses:
-    print(address.get_text())
+page_addresses = soup.find_all('address')
+
+for address in page_addresses:
+    addresses.append(address.get_text().replace('\n', '').lstrip().rstrip())
+
+page_prices = soup.find_all('span', {'class': 'PropertyCardWrapper__StyledPriceLine'})
+
+for price in page_prices:
+    prices.append(price.get_text().replace('+', '').replace('/mo', '').replace('1 bd', '').replace('1bd', ''))
 
 --------------------------------------------------Selenium Webdriver--------------------------------------------------
 firefox_options = webdriver.FirefoxOptions()
