@@ -36,25 +36,21 @@ firefox_options = webdriver.FirefoxOptions()
 driver = webdriver.Firefox(options=firefox_options)
 driver.get(FORMS_URL)
 
-q_1 = driver.find_element(By.XPATH, value='/html/body/div/div[2]/form/div[2]/div/div[2]/div[1]/div/div/div[2]/div/'
-                                          'div[1]/div/div[1]/input')
-
-q_2 = driver.find_element(By.XPATH, value='/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/'
-                                          'div[1]/div/div[1]/input')
-
-q_3 = driver.find_element(By.XPATH, value='/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/'
-                                          'div[1]/div/div[1]/input')
-
-submit_button = driver.find_element(By.XPATH, value='/html/body/div/div[2]/form/div[2]/div/div[3]/div[1]/div[1]/div'
-                                                    '/span/span')
-
-# for n in range(44):
-#     q_1.send_keys(addresses[n])
-#     q_2.send_keys(prices[n])
-#     q_3.send_keys(links[n])
-#     submit_button.click()
-
-
+for n in range(44):
+    q_1 = driver.find_element(By.XPATH, value='/html/body/div/div[2]/form/div[2]/div/div[2]/div[1]/div/div/div[2]/div/'
+                                              'div[1]/div/div[1]/input')
+    q_2 = driver.find_element(By.XPATH, value='/html/body/div/div[2]/form/div[2]/div/div[2]/div[2]/div/div/div[2]/div/'
+                                              'div[1]/div/div[1]/input')
+    q_3 = driver.find_element(By.XPATH, value='/html/body/div/div[2]/form/div[2]/div/div[2]/div[3]/div/div/div[2]/div/'
+                                              'div[1]/div/div[1]/input')
+    submit_button = driver.find_element(By.XPATH, value='/html/body/div/div[2]/form/div[2]/div/div[3]/div[1]/div[1]'
+                                                        '/div/span/span')
+    q_1.send_keys(addresses[n])
+    q_2.send_keys(prices[n])
+    q_3.send_keys(links[n])
+    submit_button.click()
+    refresh_button = driver.find_element(By.XPATH, value='/html/body/div[1]/div[2]/div[1]/div/div[4]/a')
+    refresh_button.click()
 
 # property_list_element = driver.find_elements(By.CLASS_NAME, value='ListItem-c11n-8-84-3-StyledListCardWrapper')
 
