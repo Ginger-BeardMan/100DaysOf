@@ -19,7 +19,7 @@ def speed_calc_decorator(function):
         start_time = time.time()
         function()
         end_time = time.time()
-        print(end_time - start_time)
+        print(f"{function.__name__} run speed: {end_time - start_time}s")
 
     return calc_speed
 
